@@ -1,0 +1,60 @@
+# Server
+server:
+  port: 8080
+
+# Postgres SQL
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_name
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# Resilience4j
+resilience4j:
+  ratelimiter:
+    instances:
+      basic:
+        limit-for-period: 10
+        limit-refresh-period: 1m
+        timeout-duration: 10s
+
+# Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: tru
+
+# Prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+          - prometheus
+
+  # RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# Logging
+logging:
+  level:
+    root: info
+    com.example.mypackage: debug
+  file:
+    name: /var/log/myapp.log
+
